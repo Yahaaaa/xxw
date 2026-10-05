@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="color-scheme" content="light">
+  <title>验证报告样例</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; color: #292929; background: #f4f5f6; font-family: -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif; }
+    .page { width: min(100%,750px); min-height: 100vh; margin: 0 auto; background: #fff; }
+    .notice { padding: 8px 16px; color: #b42318; background: #fff3f1; border-bottom: 1px solid #ffd7d2; font-size: 13px; font-weight: 650; text-align: center; }
+    header { position: relative; height: 72px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #f0f0f0; }
+    header a { position: absolute; left: 18px; display: grid; place-items: center; width: 40px; height: 40px; color: #444; text-decoration: none; }
+    h1 { margin: 0; font-size: 24px; font-weight: 600; }
+    main { padding: 28px 24px 50px; }
+    .report { position: relative; padding: 30px; border: 1px solid #e6e8e9; border-radius: 8px; overflow: hidden; }
+    .report::after { content: "验证报告"; position: absolute; left: 50%; top: 45%; color: rgba(180,35,24,.10); font-size: 68px; font-weight: 800; white-space: nowrap; transform: translate(-50%,-50%) rotate(-28deg); pointer-events: none; }
+    h2 { margin: 0 0 24px; color: #159f70; font-size: 25px; text-align: center; }
+    .row { position: relative; z-index: 1; display: grid; grid-template-columns: 120px 1fr; gap: 18px; padding: 14px 0; border-bottom: 1px solid #f0f0f0; }
+    .label { color: #929292; text-align: right; }
+    .foot { margin: 22px 0 0; color: #888; font-size: 13px; line-height: 1.7; text-align: center; }
+    @media (max-width:600px) { .notice{font-size:11px}.page{width:100%}header{height:64px}h1{font-size:20px}main{padding:18px 16px 36px}.report{padding:22px 16px}.row{grid-template-columns:94px 1fr;gap:14px;font-size:15px}.report::after{font-size:48px} }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <a href="./index.html" aria-label="返回高等学籍页面"><svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg></a>
+      <h1>验证报告样例</h1>
+    </header>
+    <main>
+      <section class="report" aria-label="演示验证报告">
+        <h2>学籍信息验证报告</h2>
+        <div class="row"><div class="label">姓名</div><div>唐艺珈</div></div>
+        <div class="row"><div class="label">院校</div><div>北京理工大学</div></div>
+        <div class="row"><div class="label">专业</div><div>计算机科学与技术</div></div>
+        <div class="row"><div class="label">层次</div><div>本科生</div></div>
+        <div class="row"><div class="label">学习形式</div><div>全日制</div></div>
+        <div class="row"><div class="label">学籍状态</div><div>在籍（注册学籍）</div></div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

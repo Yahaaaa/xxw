@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="color-scheme" content="light">
+  <title>高等学籍</title>
+  <style>
+    :root {
+      --green-a: #18ad7b;
+      --green-b: #3bc993;
+      --ink: #252525;
+      --muted: #969696;
+      --demo: #b42318;
+      --demo-bg: #fff3f1;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      background: #f4f5f6;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--ink);
+      background: #f4f5f6;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue",
+        "Microsoft YaHei", Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.4;
+    }
+
+    button, a { font: inherit; }
+
+    .page {
+      width: min(100%, 750px);
+      min-height: 100vh;
+      margin: 0 auto;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 0 28px rgba(0, 0, 0, .06);
+    }
+
+    .demo-notice {
+      min-height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 16px;
+      color: var(--demo);
+      background: var(--demo-bg);
+      border-bottom: 1px solid #ffd7d2;
+      font-size: 13px;
+      font-weight: 650;
+      text-align: center;
+    }
+
+    .topbar {
+      position: relative;
+      height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .topbar h1 {
+      margin: 0;
+      color: #363636;
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: .04em;
+    }
+
+    .back {
+      position: absolute;
+      left: 22px;
+      top: 50%;
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      display: grid;
+      place-items: center;
+      color: #4b4b4b;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      transform: translateY(-50%);
+    }
+
+    main { padding: 20px 32px 42px; }
+
+    .recommend {
+      position: relative;
+      height: 104px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 17px 28px;
+      overflow: hidden;
+      color: #fff;
+      background: linear-gradient(112deg, #32acc0 0%, #3abed0 72%, #34b6c7 100%);
+      border-radius: 10px;
+    }
+
+    .recommend::before {
+      content: "";
+      position: absolute;
+      left: 34%;
+      bottom: -72px;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.055);
+    }
+
+    .recommend-copy { position: relative; z-index: 1; }
+
+    .recommend-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+      font-size: 27px;
+      font-weight: 750;
+      line-height: 1;
+    }
+
+    .recommend-tag {
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: rgba(0, 122, 147, .46);
+      font-size: 15px;
+      font-weight: 650;
+    }
+
+    .recommend-subtitle { font-size: 17px; font-weight: 600; }
+
+    .recommend-graphic {
+      position: relative;
+      z-index: 1;
+      width: 148px;
+      flex: 0 0 auto;
+    }
+
+    .profile-card {
+      margin-top: 20px;
+      padding: 36px 34px 31px;
+      color: #fff;
+      background: linear-gradient(148deg, var(--green-a), var(--green-b));
+      border-radius: 10px;
+      box-shadow: 0 12px 21px rgba(25, 174, 124, .2);
+    }
+
+    .profile-head {
+      display: grid;
+      grid-template-columns: 91px 91px minmax(0, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .photo-block { min-width: 0; text-align: center; }
+
+    .photo {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      overflow: hidden;
+      background: #eef0f0;
+      border: 2px solid rgba(255,255,255,.9);
+      border-radius: 9px;
+    }
+
+    .photo img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .photo-placeholder::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 24%;
+      width: 38%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: #dadada;
+      transform: translateX(-50%);
+    }
+
+    .photo-placeholder::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 12%;
+      width: 67%;
+      height: 38%;
+      border-radius: 50% 50% 8% 8%;
+      background: #dadada;
+      transform: translateX(-50%);
+    }
+
+    .photo-label {
+      margin-top: 10px;
+      font-size: 15px;
+      white-space: nowrap;
+    }
+
+    .person { padding-top: 13px; }
+
+    .person-name {
+      margin-bottom: 9px;
+      font-size: 27px;
+      font-weight: 400;
+      white-space: nowrap;
+    }
+
+    .person-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px 22px;
+      font-size: 18px;
+      white-space: nowrap;
+    }
+
+    .school-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 33px;
+    }
+
+    .school {
+      min-width: 0;
+      font-size: 31px;
+      font-weight: 400;
+      white-space: nowrap;
+    }
+
+    .degree {
+      flex: 0 0 auto;
+      padding: 5px 15px;
+      border-radius: 999px;
+      background: rgba(0, 129, 89, .45);
+      font-size: 18px;
+      white-space: nowrap;
+    }
+
+    .major {
+      display: flex;
+      align-items: center;
+      gap: 17px;
+      margin-top: 17px;
+      font-size: 20px;
+      white-space: nowrap;
+    }
+
+    .major .divider { opacity: .7; }
+
+    .details {
+      width: min(100%, 540px);
+      margin: 48px auto 0;
+    }
+
+    .detail-row {
+      display: grid;
+      grid-template-columns: 155px minmax(0, 1fr);
+      gap: 34px;
+      align-items: center;
+      min-height: 66px;
+      font-size: 20px;
+    }
+
+    .detail-label {
+      color: var(--muted);
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .detail-value {
+      color: #292929;
+      overflow-wrap: anywhere;
+    }
+
+    .report-link {
+      width: min(100%, 680px);
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 30px auto 0;
+      color: #fff;
+      background: linear-gradient(90deg, #12a573, #159f70);
+      border-radius: 2px;
+      font-size: 23px;
+      text-decoration: none;
+    }
+
+    .safe-note {
+      margin: 14px auto 0;
+      color: #a1a1a1;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      html, body { background: #fff; }
+      .page { box-shadow: none; }
+      .demo-notice { min-height: 32px; padding: 6px 12px; font-size: 11px; }
+      .topbar { height: 68px; }
+      .topbar h1 { font-size: 22px; }
+      .back { left: 10px; width: 38px; height: 38px; }
+      main { padding: 14px 16px 28px; }
+      .recommend { height: 66px; padding: 11px 14px; border-radius: 7px; }
+      .recommend-title { gap: 7px; margin-bottom: 6px; font-size: 19px; }
+      .recommend-tag { padding: 3px 8px; font-size: 11px; }
+      .recommend-subtitle { font-size: 13px; }
+      .recommend-graphic { width: 92px; }
+      .profile-card { margin-top: 12px; padding: 20px 17px 18px; border-radius: 7px; }
+      .profile-head { grid-template-columns: 50px 50px minmax(0, 1fr); gap: 12px; }
+      .photo { border-width: 1px; border-radius: 6px; }
+      .photo-label { margin-top: 6px; font-size: 11px; }
+      .person { padding-top: 7px; }
+      .person-name { margin-bottom: 6px; font-size: 18px; }
+      .person-meta { gap: 4px 13px; font-size: 14px; }
+      .school-row { margin-top: 18px; }
+      .school { font-size: 22px; }
+      .degree { padding: 3px 9px; font-size: 13px; }
+      .major { gap: 10px; margin-top: 12px; font-size: 15px; }
+      .details { margin-top: 28px; }
+      .detail-row { grid-template-columns: 125px minmax(0, 1fr); gap: 21px; min-height: 48px; font-size: 17px; }
+      .report-link { min-height: 50px; margin-top: 21px; font-size: 18px; }
+      .safe-note { font-size: 10px; }
+    }
+
+    @media (max-width: 370px) {
+      main { padding-inline: 14px; }
+      .profile-card { padding-inline: 14px; }
+      .profile-head { grid-template-columns: 46px 46px minmax(0, 1fr); gap: 9px; }
+      .person-name { font-size: 17px; }
+      .person-meta { gap: 3px 8px; font-size: 12px; }
+      .school { font-size: 19px; }
+      .degree { font-size: 12px; }
+      .major { font-size: 13px; }
+      .detail-row { grid-template-columns: 108px minmax(0, 1fr); gap: 16px; font-size: 15px; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page { width: 100%; box-shadow: none; }
+      .profile-card, .recommend, .report-link { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+
+    <header class="topbar">
+      <button class="back" type="button" aria-label="返回上一页" onclick="history.back()">
+        <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m15 18-6-6 6-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+        </svg>
+      </button>
+      <h1>高等学籍</h1>
+    </header>
+
+    <main>
+      <section class="recommend" aria-label="专业推荐">
+        <div class="recommend-copy">
+          <div class="recommend-title">专业推荐 <span class="recommend-tag">推荐</span></div>
+          <div class="recommend-subtitle">本校优势专业或特色专业</div>
+        </div>
+        <svg class="recommend-graphic" viewBox="0 0 180 120" aria-hidden="true">
+          <rect x="29" y="13" width="142" height="96" rx="10" fill="#6bd6c9" opacity=".55"/>
+          <rect x="40" y="22" width="120" height="78" rx="6" fill="#b8f0d9" opacity=".52"/>
+          <path fill="#fff" d="m99 39-38 16 38 16 38-16-38-16Zm-23 25v16c16 13 31 13 46 0V64L99 74 76 64Z"/>
+          <path stroke="#fff" stroke-width="5" stroke-linecap="round" d="M135 62v22m12-31v31m12-14v14"/>
+          <path fill="#fff" d="M15 54h9v31h-9zM25 50l17-15c5-4 10 0 8 6l-4 11h15c7 0 8 6 6 12l-5 18c-1 4-4 6-8 6H25V50Z"/>
+        </svg>
+      </section>
+
+      <section class="profile-card" aria-label="学生基本信息">
+        <div class="profile-head">
+          <div class="photo-block">
+            <div class="photo"><img src="./照片.png" alt="录取照片"></div>
+            <div class="photo-label">录取照片</div>
+          </div>
+          <div class="photo-block">
+            <div class="photo photo-placeholder" aria-label="暂无学历照片"></div>
+            <div class="photo-label">学历照片</div>
+          </div>
+          <div class="person">
+            <div class="person-name">唐艺珈</div>
+            <div class="person-meta"><span>女</span><span>2001年03月19日</span></div>
+          </div>
+        </div>
+
+        <div class="school-row">
+          <div class="school">北京理工大学</div>
+          <div class="degree">本科生</div>
+        </div>
+        <div class="major"><span>计算机科学与技术</span><span class="divider">|</span><span>全日制</span></div>
+      </section>
+
+      <section class="details" aria-label="学籍详细信息">
+        <div class="detail-row"><div class="detail-label">民族</div><div class="detail-value">汉族</div></div>
+        <div class="detail-row"><div class="detail-label">证件号码</div><div class="detail-value">430724200103195820</div></div>
+        <div class="detail-row"><div class="detail-label">学制</div><div class="detail-value">4年</div></div>
+        <div class="detail-row"><div class="detail-label">学历类别</div><div class="detail-value">普通高等教育</div></div>
+        <div class="detail-row"><div class="detail-label">分院</div><div class="detail-value">计算机学院</div></div>
+        <div class="detail-row"><div class="detail-label">系所</div><div class="detail-value"></div></div>
+        <div class="detail-row"><div class="detail-label">班级</div><div class="detail-value"></div></div>
+        <div class="detail-row"><div class="detail-label">学号</div><div class="detail-value">3120255802</div></div>
+        <div class="detail-row"><div class="detail-label">入学日期</div><div class="detail-value">2026年09月01日</div></div>
+        <div class="detail-row"><div class="detail-label">学籍状态</div><div class="detail-value">在籍（注册学籍）</div></div>
+        <div class="detail-row"><div class="detail-label">预计毕业日期</div><div class="detail-value">2030年06月01日</div></div>
+      </section>
+
+      <a class="report-link" href="./verification-report.html">查看验证报告</a>
+
+    </main>
+  </div>
+</body>
+</html>
